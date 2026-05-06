@@ -8,10 +8,10 @@
         body {
             font-family: 'Times New Roman', serif;
             max-width: 900px;
-            margin: 20px auto;
+            margin: 10px auto;
             padding: 20px;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.0;
         }
         .header {
             text-align: center;
@@ -25,12 +25,18 @@
             justify-content: space-between;
             margin-bottom: 5px;
         }
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-bottom: 8px;
-            align-items: center;
-        }
+        .form-row-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* space between both sections */
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
         .form-row label {
             font-weight: bold;
             margin-right: 5px;
@@ -49,7 +55,7 @@
         .inline-group {
             display: inline-flex;
             align-items: center;
-            margin-right: 20px;
+            margin-right: 10px;
         }
         textarea {
             width: 100%;
@@ -61,12 +67,12 @@
         }
         .certificate {
             border: 1px solid #000;
-            padding: 10px;
-            margin-top: 15px;
+            padding: 5px;
+            margin-top: 5px;
         }
         .signature {
             text-align: right;
-            margin-top: 40px;
+            margin-top: 10px;
         }
         table {
             width: 100%;
@@ -101,40 +107,41 @@
 
     <button class="print-btn" onclick="window.print()">🖨️ Print Form</button>
 
-    <div style="display:flex; justify-content:center;  margin-bottom:20px;">
-        <img src="refer_capf_header.jpg" alt="Image 1" style="auto; height:100px; border:0px solid #ccc; object-fit:contain;">
+    <div style="display:flex; justify-content:center;  margin-bottom:0px;">
+        <img src="refer_capf_header.jpg" alt="Image 1" style="height:100px; border:0px solid #ccc; object-fit:contain;">
     </div>
 
     <div class="header">
-        <h4>OFFICE OF DY. INSPECTOR GENERAL SHQ BGLR ANO
-        ITB Police CAMP SUNDRAHALLI, CHIKBALLAPURA (KARNATAKA)</h4>
+        <h5>OFFICE OF DY. INSPECTOR GENERAL SHQ BGLR ANO
+        ITB Police CAMP SUNDRAHALLI, CHIKBALLAPURA (KARNATAKA)</h5>
     </div>
 
     <div class="contact-row">
-        <span>OFFICE PHONE NO. +91 81582 52011</span>
-        <span>EMERGENCY/OPD NO: <input type="text" style="width:80px"> /2025</span>
-        <span>FAX- 081582 52013</span>
+        <span>OFFICE PHONE NO: +91 81582 52011</span>
+        <span>EMERGENCY/OPD NO: <input type="text" style="width:80px"></span>
+        <span>FAX:081582 52013</span>
+         <div class="form-row">
+        <label>EMAIL:</label>
+        <span>itcellbglr@itbp.gov.in</span>
+    </div>
     </div>
 
+<div class="form-row-wrapper">
     <div class="form-row">
         <label>AYUSHMAN CARD No.:</label>
         <input type="text" name="ayushman_card">
     </div>
 
-    <div class="form-row">
-        <label>EMAIL:</label>
-        <span>itcellbglr@itbp.gov.in</span>
+    <div class="form-row" style="justify-content:center;">
+        <label>REFERRAL NO:</label>
+        <input type="text" name="referral_no" style="width:80px">  &nbsp;&nbsp;
+        <label>DATE:</label>
+        <input type="date" name="referral_date">
     </div>
-
-    <div class="header">
+</div>
+       <div class="header">
         <strong>OPD on payment / IPD cashless treatment</strong><br>
-        <div class="form-row" style="justify-content:center;">
-            <label>REFERRAL NO:</label>
-            <input type="text" name="referral_no" style="width:80px"> /2025
-            &nbsp;&nbsp;
-            <label>DATE:</label>
-            <input type="date" name="referral_date">
-        </div>
+        
     </div>
 	<div style="text-align:center;"><h3 style="display:inline-block; border:1px solid #000; padding:5px 15px;">AYUSHMAN CAPF REFER SLIP</h3></div>
     <div class="form-row">
@@ -144,10 +151,7 @@
     </div>
 
     <p><strong>Subject:</strong> Referral of patient for further evaluation & treatment.</p>
-
-    ?
-
-    <div class="form-row">
+  <div class="form-row">
         <label>Name of Patient:</label>
         <input type="text" name="patient_name">
         &nbsp;&nbsp;
@@ -159,11 +163,14 @@
     </div>
 
     <div class="form-row">
-        <label>Aadhaar No:</label>
-        <input type="text" name="aadhaar" placeholder="XXXX XXXX XXXX">
+        <label>Aadhaar No: XXXX XXXX</label>
+        <input type="text" name="aadhaar" placeholder="Last 4 digits" maxlength="4" pattern="[0-9]{4}" title="Enter last 4 digits of Aadhaar" oninput="this.value=this.value.replace(/[^0-9]/g,''); validateAadhaar(this)" style="width:80px;">
+        <span id="aadhaar-error" style="color:red; font-size:12px; display:none; margin-left:5px;">⚠ Enter last 4 digits only</span>
+        <br><small style="color:#555; margin-left:90px;">(last 4 digits of Aadhaar)</small>
         &nbsp;&nbsp;
         <label>MOBILE NO:</label>
-        <input type="text" name="mobile">
+        <input type="tel" name="mobile" pattern="[0-9]{10}" maxlength="10" title="Please enter a valid 10-digit mobile number" oninput="this.value=this.value.replace(/[^0-9]/g,''); validateMobile(this)">
+        <span id="mobile-error" style="color:red; font-size:12px; display:none; margin-left:5px;">⚠ Please enter a valid 10-digit mobile number</span>
     </div>
 
     <div class="form-row">
@@ -221,16 +228,15 @@
         <label>VALID FOR:</label>
         <select name="validity">
             <option value="01 MONTH OR 03 VISITS">01 MONTH OR 03 VISITS</option>
-            <option value="02 MONTHS OR 06 VISITS">02 MONTHS OR 06 VISITS</option>
-            <option value="03 MONTHS OR 09 VISITS">03 MONTHS OR 09 VISITS</option>
+            <option value="03 MONTHS">03 MONTHS</option>
         </select>
     </div>
 
     <div class="certificate">
         <h4 style="text-align:center;">CERTIFICATE</h4>
-        <p>It is certified that the above-mentioned investigations/facilities are not available at MI Room SHQ BGLR ITBP CAMP SUNDRAHALLI, CHIKBALLAPURA (KARNATAKA)-562102.</p>
-        <p>The patient is authorized to get benefits vide the Ministry of Health & Family Welfare O.M NO. S.110.11/06/96 CGHS(P) DTD 04/12/2018. The charges should be restricted to the rate fixed for CGHS beneficiaries.</p>
-        <p>The patient is authorized to get AB-PMJAY(CAPFS) benefits vide Director Police-II Division (PERS. COORD), NHA letter ID NO195/MHA/P-II/PERS.COORD/2020 DTD 15/01/2021. The charges should be restricted to the rate fixed for AB-PMJAY(CAPFS).</p>
+        It is certified that the above-mentioned investigations/facilities are not available at MI Room SHQ BGLR ITBP CAMP SUNDRAHALLI, CHIKBALLAPURA (KARNATAKA)-562102.
+        The patient is authorized to get benefits vide the Ministry of Health & Family Welfare O.M NO. S.110.11/06/96 CGHS(P) DTD 04/12/2018. The charges should be restricted to the rate fixed for CGHS beneficiaries.
+        The patient is authorized to get AB-PMJAY(CAPFS) benefits vide Director Police-II Division (PERS. COORD), NHA letter ID NO195/MHA/P-II/PERS.COORD/2020 DTD 15/01/2021. The charges should be restricted to the rate fixed for AB-PMJAY(CAPFS).
     </div>
 
     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:40px;">
@@ -243,8 +249,27 @@
             <p>ITB POLICE FORCE</p>
         </div>
     </div>
-
-    <button class="print-btn" onclick="window.print()">🖨️ Print Form</button>
-
+    <script>
+        function validateMobile(input) {
+            var error = document.getElementById('mobile-error');
+            if (input.value.length > 0 && input.value.length < 10) {
+                error.style.display = 'inline';
+                input.style.borderBottom = '2px solid red';
+            } else {
+                error.style.display = 'none';
+                input.style.borderBottom = '1px solid #000';
+            }
+        }
+        function validateAadhaar(input) {
+            var error = document.getElementById('aadhaar-error');
+            if (input.value.length > 0 && input.value.length < 4) {
+                error.style.display = 'inline';
+                input.style.borderBottom = '2px solid red';
+            } else {
+                error.style.display = 'none';
+                input.style.borderBottom = '1px solid #000';
+            }
+        }
+    </script>
 </body>
 </html>
